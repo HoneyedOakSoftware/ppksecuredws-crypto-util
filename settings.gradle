@@ -1,0 +1,5 @@
+rootProject.name = 'ppksecuredws-crypto-util'
+include 'cryptoutil'
+include 'cryptoutil-annotation'
+include 'cryptoutil-processor'
+
