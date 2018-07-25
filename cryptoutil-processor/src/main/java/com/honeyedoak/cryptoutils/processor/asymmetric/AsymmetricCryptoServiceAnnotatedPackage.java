@@ -75,6 +75,7 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 				.build();
 
 		MethodSpec constructor = MethodSpec.constructorBuilder()
+				.addModifiers(Modifier.PUBLIC)
 				.addCode("this.asymmetricCryptoUtils = new $T($S, $L);", AsymmetricCryptoUtilsImpl.class, algorithm, keySize)
 				.build();
 

@@ -1,8 +1,8 @@
 package com.honeyedoak.cryptoutils.processor.symmetric;
 
-import com.honeyedoak.cryptoutils.annotation.SymmetricCryptoService;
 import com.honeyedoak.cryptoutils.SymmetricCryptoUtils;
 import com.honeyedoak.cryptoutils.SymmetricCryptoUtilsImpl;
+import com.honeyedoak.cryptoutils.annotation.SymmetricCryptoService;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -58,6 +58,7 @@ public class SymmetricCryptoServiceAnnotatedPackage {
 				.build();
 
 		MethodSpec constructor = MethodSpec.constructorBuilder()
+				.addModifiers(Modifier.PUBLIC)
 				.addCode("this.symmetricCryptoUtils = new $T($S);", SymmetricCryptoUtilsImpl.class, algorithm)
 				.build();
 

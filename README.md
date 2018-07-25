@@ -8,7 +8,7 @@ automatic generation of CryptoService classes to reduce boilerplate.
 @SymmetricCryptoService(serviceName = "SymmetricCryptoService", algorithm = "PBEWITHSHA256AND128BITAES-CBC-BC") //all params are optional, shown values are provided defaults
 ```
 
-Both are meant to set on package level where they will generate their respective @Services, each implementing com.honeyedoak.cryptoutils.AsymetricCryptoUtils or com.honeyedoak.cryptoutils.SymetricCryptoUtils interfaces.
+Both are meant to set on package level where they will generate their respective @Services, each implementing com.honeyedoak.cryptoutils.AsymmetricCryptoUtils or com.honeyedoak.cryptoutils.SymmetricCryptoUtils interfaces.
 
 ### AsymmetricCryptoService
 example of generated class:
