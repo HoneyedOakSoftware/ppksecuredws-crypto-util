@@ -1,4 +1,4 @@
-package com.honeyedoak.cryptoutils;
+package com.honeyedoak.cryptoutils.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,9 +7,11 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.PACKAGE)
-public @interface SymmetricCryptoService {
+public @interface AsymmetricCryptoService {
 
-	String serviceName() default "SymmetricCryptoService";
+	String serviceName() default "AsymmetricCryptoService";
 
-	String algorithm() default "PBEWITHSHA256AND128BITAES-CBC-BC";
+	String algorithm() default "RSA";
+
+	int keySize() default 4096;
 }
