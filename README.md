@@ -1,6 +1,6 @@
 # ppksecuredws-crypto-util
 
-automatic generation of CryptotulsService classes to reduce boilerplate code
+automatic generation of CryptoService classes to reduce boilerplate.
 
 ## provided annotations
 ```java
@@ -8,7 +8,7 @@ automatic generation of CryptotulsService classes to reduce boilerplate code
 @SymmetricCryptoService(serviceName = "SymmetricCryptoService", algorithm = "PBEWITHSHA256AND128BITAES-CBC-BC") //all params are optional, shown values are provided defaults
 ```
 
-Both are meant to set on package level where they will generate their respective @Serives, each implementing com.honeyedoak.cryptoutils.AsymetricCryptoUtils or com.honeyedoak.cryptoutils.SymetricCryptoUtils interfaces.
+Both are meant to set on package level where they will generate their respective @Services, each implementing com.honeyedoak.cryptoutils.AsymetricCryptoUtils or com.honeyedoak.cryptoutils.SymetricCryptoUtils interfaces.
 
 ### AsymmetricCryptoService
 example of generated class:
