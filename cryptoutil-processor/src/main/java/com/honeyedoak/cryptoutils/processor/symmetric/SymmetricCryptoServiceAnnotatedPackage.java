@@ -98,7 +98,7 @@ public class SymmetricCryptoServiceAnnotatedPackage {
 
 		TypeSpec asymmetricCryptoService = TypeSpec.classBuilder(serviceName)
 				.addModifiers(Modifier.PUBLIC)
-				.addSuperinterface(com.honeyedoak.cryptoutils.SymmetricCryptoService.class)
+				.addSuperinterface(SymmetricCryptoService.class)
 				.addAnnotation(Service.class)
 				.addField(symmetricCryptoUtils)
 				.addMethod(constructor)

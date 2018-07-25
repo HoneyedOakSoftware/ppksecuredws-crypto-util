@@ -125,7 +125,7 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 
 		TypeSpec asymmetricCryptoService = TypeSpec.classBuilder(serviceName)
 				.addModifiers(Modifier.PUBLIC)
-				.addSuperinterface(com.honeyedoak.cryptoutils.AsymmetricCryptoService.class)
+				.addSuperinterface(AsymmetricCryptoService.class)
 				.addField(asymmetricCryptoUtils)
 				.addAnnotation(Service.class)
 				.addMethod(constructor)
