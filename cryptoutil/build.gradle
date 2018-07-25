@@ -1,16 +1,3 @@
-plugins {
-    id 'java-library'
-}
-
-group 'com.honeyedoak'
-version '0.0.1-SNAPSHOT'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.59'
     compile group: 'org.jasypt', name: 'jasypt', version: '1.9.2'

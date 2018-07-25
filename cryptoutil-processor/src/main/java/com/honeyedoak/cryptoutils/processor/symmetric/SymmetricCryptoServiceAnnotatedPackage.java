@@ -1,7 +1,8 @@
-package com.honeyedoak.cryptoutils.symmetric;
+package com.honeyedoak.cryptoutils.processor.symmetric;
 
-import com.honeyedoak.cryptoutils.AsymmetricCryptoUtils;
-import com.honeyedoak.cryptoutils.SymmetricCryptoService;
+import com.honeyedoak.cryptoutils.annotation.SymmetricCryptoService;
+import com.honeyedoak.cryptoutils.SymmetricCryptoUtils;
+import com.honeyedoak.cryptoutils.SymmetricCryptoUtilsImpl;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -9,6 +10,7 @@ import com.squareup.javapoet.TypeSpec;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Generated;
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
@@ -52,11 +54,11 @@ public class SymmetricCryptoServiceAnnotatedPackage {
 	}
 
 	public void generateCode(Filer filer) throws IOException {
-		FieldSpec symmetricCryptoUtils = FieldSpec.builder(String.class, "symmetricCryptoUtils", Modifier.PRIVATE, Modifier.FINAL)
+		FieldSpec symmetricCryptoUtils = FieldSpec.builder(SymmetricCryptoUtils.class, "symmetricCryptoUtils", Modifier.PRIVATE, Modifier.FINAL)
 				.build();
 
 		MethodSpec constructor = MethodSpec.constructorBuilder()
-				.addCode("this.symmetricCryptoUtils = new SymmetricCryptoUtilsImpl(%s);;", algorithm)
+				.addCode("this.symmetricCryptoUtils = new $T($S);", SymmetricCryptoUtilsImpl.class, algorithm)
 				.build();
 
 		MethodSpec decrypt = MethodSpec.methodBuilder("decrypt")
@@ -96,8 +98,9 @@ public class SymmetricCryptoServiceAnnotatedPackage {
 				.build();
 
 		TypeSpec asymmetricCryptoService = TypeSpec.classBuilder(serviceName)
+				.addAnnotation(Generated.class)
 				.addModifiers(Modifier.PUBLIC)
-				.addSuperinterface(AsymmetricCryptoUtils.class)
+				.addSuperinterface(SymmetricCryptoService.class)
 				.addAnnotation(Service.class)
 				.addField(symmetricCryptoUtils)
 				.addMethod(constructor)
