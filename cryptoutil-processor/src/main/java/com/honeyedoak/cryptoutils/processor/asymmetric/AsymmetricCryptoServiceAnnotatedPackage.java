@@ -11,6 +11,7 @@ import com.squareup.javapoet.TypeSpec;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Generated;
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
@@ -124,6 +125,7 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 				.build();
 
 		TypeSpec asymmetricCryptoService = TypeSpec.classBuilder(serviceName)
+				.addAnnotation(Generated.class)
 				.addModifiers(Modifier.PUBLIC)
 				.addSuperinterface(AsymmetricCryptoService.class)
 				.addField(asymmetricCryptoUtils)
