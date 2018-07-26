@@ -3,10 +3,8 @@ package com.honeyedoak.cryptoutils.processor.symmetric;
 import com.honeyedoak.cryptoutils.SymmetricCryptoUtils;
 import com.honeyedoak.cryptoutils.SymmetricCryptoUtilsImpl;
 import com.honeyedoak.cryptoutils.annotation.SymmetricCryptoService;
-import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeSpec;
+import com.honeyedoak.cryptoutils.processor.asymmetric.CryptoutilsAsymmetricCryptoServiceProcessor;
+import com.squareup.javapoet.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -98,8 +96,12 @@ public class SymmetricCryptoServiceAnnotatedPackage {
 				.addCode("return symmetricCryptoUtils.encrypt(payload, password);")
 				.build();
 
+		AnnotationSpec generated = AnnotationSpec.builder(Generated.class)
+				.addMember("value", "$S", CryptoutilsAsymmetricCryptoServiceProcessor.class.getName())
+				.build();
+
 		TypeSpec asymmetricCryptoService = TypeSpec.classBuilder(serviceName)
-				.addAnnotation(Generated.class)
+				.addAnnotation(generated)
 				.addModifiers(Modifier.PUBLIC)
 				.addSuperinterface(SymmetricCryptoService.class)
 				.addAnnotation(Service.class)
