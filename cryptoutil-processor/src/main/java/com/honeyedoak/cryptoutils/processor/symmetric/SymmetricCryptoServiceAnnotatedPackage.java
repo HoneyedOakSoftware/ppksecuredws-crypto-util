@@ -2,13 +2,10 @@ package com.honeyedoak.cryptoutils.processor.symmetric;
 
 import com.honeyedoak.cryptoutils.SymmetricCryptoUtils;
 import com.honeyedoak.cryptoutils.SymmetricCryptoUtilsImpl;
-import com.honeyedoak.cryptoutils.annotation.SymmetricCryptoService;
 import com.honeyedoak.cryptoutils.processor.asymmetric.CryptoutilsAsymmetricCryptoServiceProcessor;
 import com.squareup.javapoet.*;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Generated;
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
@@ -22,20 +19,20 @@ public class SymmetricCryptoServiceAnnotatedPackage {
 
 	public SymmetricCryptoServiceAnnotatedPackage(PackageElement packageElement) throws IllegalArgumentException {
 		this.annotatedPackageElement = packageElement;
-		SymmetricCryptoService annotation = packageElement.getAnnotation(SymmetricCryptoService.class);
+		com.honeyedoak.cryptoutils.annotation.SymmetricCryptoService annotation = packageElement.getAnnotation(com.honeyedoak.cryptoutils.annotation.SymmetricCryptoService.class);
 		serviceName = annotation.serviceName();
 		algorithm = annotation.algorithm();
 
 		if (StringUtils.isEmpty(serviceName)) {
 			throw new IllegalArgumentException(
 					String.format("serviceName() in @%s for class %s is null or empty! that's not allowed",
-							SymmetricCryptoService.class.getSimpleName(), packageElement.getQualifiedName().toString()));
+							com.honeyedoak.cryptoutils.annotation.SymmetricCryptoService.class.getSimpleName(), packageElement.getQualifiedName().toString()));
 		}
 
 		if (StringUtils.isEmpty(algorithm)) {
 			throw new IllegalArgumentException(
 					String.format("algorithm() in @%s for class %s is null or empty! that's not allowed",
-							SymmetricCryptoService.class.getSimpleName(), packageElement.getQualifiedName().toString()));
+							com.honeyedoak.cryptoutils.annotation.SymmetricCryptoService.class.getSimpleName(), packageElement.getQualifiedName().toString()));
 		}
 	}
 
@@ -61,7 +58,7 @@ public class SymmetricCryptoServiceAnnotatedPackage {
 				.build();
 
 		MethodSpec decrypt = MethodSpec.methodBuilder("decrypt")
-				.addAnnotation(Override.class)
+				.addAnnotation(java.lang.Override.class)
 				.addModifiers(Modifier.PUBLIC)
 				.returns(byte[].class)
 				.addParameter(byte[].class, "payload")
@@ -70,7 +67,7 @@ public class SymmetricCryptoServiceAnnotatedPackage {
 				.build();
 
 		MethodSpec decryptChar = MethodSpec.methodBuilder("decrypt")
-				.addAnnotation(Override.class)
+				.addAnnotation(java.lang.Override.class)
 				.addModifiers(Modifier.PUBLIC)
 				.returns(byte[].class)
 				.addParameter(byte[].class, "payload")
@@ -79,7 +76,7 @@ public class SymmetricCryptoServiceAnnotatedPackage {
 				.build();
 
 		MethodSpec encrypt = MethodSpec.methodBuilder("encrypt")
-				.addAnnotation(Override.class)
+				.addAnnotation(java.lang.Override.class)
 				.addModifiers(Modifier.PUBLIC)
 				.returns(byte[].class)
 				.addParameter(byte[].class, "payload")
@@ -88,7 +85,7 @@ public class SymmetricCryptoServiceAnnotatedPackage {
 				.build();
 
 		MethodSpec encryptChar = MethodSpec.methodBuilder("encrypt")
-				.addAnnotation(Override.class)
+				.addAnnotation(java.lang.Override.class)
 				.addModifiers(Modifier.PUBLIC)
 				.returns(byte[].class)
 				.addParameter(byte[].class, "payload")
@@ -96,15 +93,15 @@ public class SymmetricCryptoServiceAnnotatedPackage {
 				.addCode("return symmetricCryptoUtils.encrypt(payload, password);")
 				.build();
 
-		AnnotationSpec generated = AnnotationSpec.builder(Generated.class)
+		AnnotationSpec generated = AnnotationSpec.builder(javax.annotation.Generated.class)
 				.addMember("value", "$S", CryptoutilsAsymmetricCryptoServiceProcessor.class.getName())
 				.build();
 
 		TypeSpec asymmetricCryptoService = TypeSpec.classBuilder(serviceName)
 				.addAnnotation(generated)
 				.addModifiers(Modifier.PUBLIC)
-				.addSuperinterface(SymmetricCryptoService.class)
-				.addAnnotation(Service.class)
+				.addSuperinterface(com.honeyedoak.cryptoutils.annotation.SymmetricCryptoService.class)
+				.addAnnotation(org.springframework.stereotype.Service.class)
 				.addField(symmetricCryptoUtils)
 				.addMethod(constructor)
 				.addMethod(decrypt)
