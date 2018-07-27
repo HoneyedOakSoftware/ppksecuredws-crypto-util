@@ -1,8 +1,5 @@
 package com.honeyedoak.cryptoutils.processor.symmetric;
 
-import com.honeyedoak.cryptoutils.SymmetricCryptoUtils;
-import com.honeyedoak.cryptoutils.SymmetricCryptoUtilsImpl;
-import com.honeyedoak.cryptoutils.processor.asymmetric.CryptoutilsAsymmetricCryptoServiceProcessor;
 import com.squareup.javapoet.*;
 import org.apache.commons.lang3.StringUtils;
 
@@ -49,12 +46,12 @@ public class SymmetricCryptoServiceAnnotatedPackage {
 	}
 
 	public void generateCode(Filer filer) throws IOException {
-		FieldSpec symmetricCryptoUtils = FieldSpec.builder(SymmetricCryptoUtils.class, "symmetricCryptoUtils", Modifier.PRIVATE, Modifier.FINAL)
+		FieldSpec symmetricCryptoUtils = FieldSpec.builder(com.honeyedoak.cryptoutils.SymmetricCryptoUtils.class, "symmetricCryptoUtils", Modifier.PRIVATE, Modifier.FINAL)
 				.build();
 
 		MethodSpec constructor = MethodSpec.constructorBuilder()
 				.addModifiers(Modifier.PUBLIC)
-				.addCode("this.symmetricCryptoUtils = new $T($S);", SymmetricCryptoUtilsImpl.class, algorithm)
+				.addCode("this.symmetricCryptoUtils = new $T($S);", com.honeyedoak.cryptoutils.SymmetricCryptoUtilsImpl.class, algorithm)
 				.build();
 
 		MethodSpec decrypt = MethodSpec.methodBuilder("decrypt")
@@ -94,7 +91,7 @@ public class SymmetricCryptoServiceAnnotatedPackage {
 				.build();
 
 		AnnotationSpec generated = AnnotationSpec.builder(javax.annotation.Generated.class)
-				.addMember("value", "$S", CryptoutilsAsymmetricCryptoServiceProcessor.class.getName())
+				.addMember("value", "$S", com.honeyedoak.cryptoutils.processor.asymmetric.CryptoutilsAsymmetricCryptoServiceProcessor.class.getName())
 				.build();
 
 		TypeSpec asymmetricCryptoService = TypeSpec.classBuilder(serviceName)

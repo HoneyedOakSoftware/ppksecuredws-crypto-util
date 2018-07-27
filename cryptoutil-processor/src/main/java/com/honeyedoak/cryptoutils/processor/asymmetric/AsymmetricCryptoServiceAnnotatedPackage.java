@@ -1,8 +1,5 @@
 package com.honeyedoak.cryptoutils.processor.asymmetric;
 
-import com.honeyedoak.cryptoutils.AsymmetricCryptoUtils;
-import com.honeyedoak.cryptoutils.AsymmetricCryptoUtilsImpl;
-import com.honeyedoak.cryptoutils.exception.CryptoException;
 import com.squareup.javapoet.*;
 import org.apache.commons.lang3.StringUtils;
 
@@ -65,18 +62,18 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 	}
 
 	public void generateCode(Filer filer) throws IOException {
-		FieldSpec asymmetricCryptoUtils = FieldSpec.builder(AsymmetricCryptoUtils.class, "asymmetricCryptoUtils", Modifier.PRIVATE, Modifier.FINAL)
+		FieldSpec asymmetricCryptoUtils = FieldSpec.builder(com.honeyedoak.cryptoutils.AsymmetricCryptoUtils.class, "asymmetricCryptoUtils", Modifier.PRIVATE, Modifier.FINAL)
 				.build();
 
 		MethodSpec constructor = MethodSpec.constructorBuilder()
 				.addModifiers(Modifier.PUBLIC)
-				.addCode("this.asymmetricCryptoUtils = new $T($S, $L);", AsymmetricCryptoUtilsImpl.class, algorithm, keySize)
+				.addCode("this.asymmetricCryptoUtils = new $T($S, $L);", com.honeyedoak.cryptoutils.AsymmetricCryptoUtilsImpl.class, algorithm, keySize)
 				.build();
 
 		MethodSpec generateKeyPair = MethodSpec.methodBuilder("generateKeyPair")
 				.addAnnotation(java.lang.Override.class)
 				.addModifiers(Modifier.PUBLIC)
-				.addException(CryptoException.class)
+				.addException(com.honeyedoak.cryptoutils.exception.CryptoException.class)
 				.returns(KeyPair.class)
 				.addCode("return this.asymmetricCryptoUtils.generateKeyPair();")
 				.build();
@@ -84,7 +81,7 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 		MethodSpec decodePrivateKey = MethodSpec.methodBuilder("decodePrivateKey")
 				.addAnnotation(java.lang.Override.class)
 				.addModifiers(Modifier.PUBLIC)
-				.addException(CryptoException.class)
+				.addException(com.honeyedoak.cryptoutils.exception.CryptoException.class)
 				.returns(PrivateKey.class)
 				.addParameter(byte[].class, "encodedKey")
 				.addCode("return asymmetricCryptoUtils.decodePrivateKey(encodedKey);")
@@ -93,7 +90,7 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 		MethodSpec decodePublicKey = MethodSpec.methodBuilder("decodePublicKey")
 				.addAnnotation(java.lang.Override.class)
 				.addModifiers(Modifier.PUBLIC)
-				.addException(CryptoException.class)
+				.addException(com.honeyedoak.cryptoutils.exception.CryptoException.class)
 				.returns(PublicKey.class)
 				.addParameter(byte[].class, "encodedKey")
 				.addCode("return asymmetricCryptoUtils.decodePublicKey(encodedKey);")
@@ -102,7 +99,7 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 		MethodSpec decrypt = MethodSpec.methodBuilder("decrypt")
 				.addAnnotation(java.lang.Override.class)
 				.addModifiers(Modifier.PUBLIC)
-				.addException(CryptoException.class)
+				.addException(com.honeyedoak.cryptoutils.exception.CryptoException.class)
 				.returns(byte[].class)
 				.addParameter(byte[].class, "payload")
 				.addParameter(Key.class, "key")
@@ -112,7 +109,7 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 		MethodSpec encrypt = MethodSpec.methodBuilder("encrypt")
 				.addAnnotation(java.lang.Override.class)
 				.addModifiers(Modifier.PUBLIC)
-				.addException(CryptoException.class)
+				.addException(com.honeyedoak.cryptoutils.exception.CryptoException.class)
 				.returns(byte[].class)
 				.addParameter(byte[].class, "payload")
 				.addParameter(Key.class, "key")
