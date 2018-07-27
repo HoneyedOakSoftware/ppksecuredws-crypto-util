@@ -1,14 +1,11 @@
 package com.honeyedoak.cryptoutils.processor.asymmetric;
 
-import com.honeyedoak.cryptoutils.annotation.AsymmetricCryptoService;
 import com.honeyedoak.cryptoutils.AsymmetricCryptoUtils;
 import com.honeyedoak.cryptoutils.AsymmetricCryptoUtilsImpl;
 import com.honeyedoak.cryptoutils.exception.CryptoException;
 import com.squareup.javapoet.*;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Generated;
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
@@ -27,7 +24,7 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 
 	public AsymmetricCryptoServiceAnnotatedPackage(PackageElement packageElement) throws IllegalArgumentException {
 		this.annotatedPackageElement = packageElement;
-		AsymmetricCryptoService annotation = packageElement.getAnnotation(AsymmetricCryptoService.class);
+		com.honeyedoak.cryptoutils.annotation.AsymmetricCryptoService annotation = packageElement.getAnnotation(com.honeyedoak.cryptoutils.annotation.AsymmetricCryptoService.class);
 		serviceName = annotation.serviceName();
 		algorithm = annotation.algorithm();
 		keySize = annotation.keySize();
@@ -35,19 +32,19 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 		if (StringUtils.isEmpty(serviceName)) {
 			throw new IllegalArgumentException(
 					String.format("serviceName() in @%s for class %s is null or empty! that's not allowed",
-							AsymmetricCryptoService.class.getSimpleName(), packageElement.getQualifiedName().toString()));
+							com.honeyedoak.cryptoutils.annotation.AsymmetricCryptoService.class.getSimpleName(), packageElement.getQualifiedName().toString()));
 		}
 
 		if (StringUtils.isEmpty(algorithm)) {
 			throw new IllegalArgumentException(
 					String.format("algorithm() in @%s for class %s is null or empty! that's not allowed",
-							AsymmetricCryptoService.class.getSimpleName(), packageElement.getQualifiedName().toString()));
+							com.honeyedoak.cryptoutils.annotation.AsymmetricCryptoService.class.getSimpleName(), packageElement.getQualifiedName().toString()));
 		}
 
 		if (keySize < 1) {
 			throw new IllegalArgumentException(
 					String.format("keySize() in @%s for class %s is zero or negative! that's not allowed",
-							AsymmetricCryptoService.class.getSimpleName(), packageElement.getQualifiedName().toString()));
+							com.honeyedoak.cryptoutils.annotation.AsymmetricCryptoService.class.getSimpleName(), packageElement.getQualifiedName().toString()));
 		}
 	}
 
@@ -77,7 +74,7 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 				.build();
 
 		MethodSpec generateKeyPair = MethodSpec.methodBuilder("generateKeyPair")
-				.addAnnotation(Override.class)
+				.addAnnotation(java.lang.Override.class)
 				.addModifiers(Modifier.PUBLIC)
 				.addException(CryptoException.class)
 				.returns(KeyPair.class)
@@ -85,7 +82,7 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 				.build();
 
 		MethodSpec decodePrivateKey = MethodSpec.methodBuilder("decodePrivateKey")
-				.addAnnotation(Override.class)
+				.addAnnotation(java.lang.Override.class)
 				.addModifiers(Modifier.PUBLIC)
 				.addException(CryptoException.class)
 				.returns(PrivateKey.class)
@@ -94,7 +91,7 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 				.build();
 
 		MethodSpec decodePublicKey = MethodSpec.methodBuilder("decodePublicKey")
-				.addAnnotation(Override.class)
+				.addAnnotation(java.lang.Override.class)
 				.addModifiers(Modifier.PUBLIC)
 				.addException(CryptoException.class)
 				.returns(PublicKey.class)
@@ -103,7 +100,7 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 				.build();
 
 		MethodSpec decrypt = MethodSpec.methodBuilder("decrypt")
-				.addAnnotation(Override.class)
+				.addAnnotation(java.lang.Override.class)
 				.addModifiers(Modifier.PUBLIC)
 				.addException(CryptoException.class)
 				.returns(byte[].class)
@@ -113,7 +110,7 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 				.build();
 
 		MethodSpec encrypt = MethodSpec.methodBuilder("encrypt")
-				.addAnnotation(Override.class)
+				.addAnnotation(java.lang.Override.class)
 				.addModifiers(Modifier.PUBLIC)
 				.addException(CryptoException.class)
 				.returns(byte[].class)
@@ -122,16 +119,16 @@ public class AsymmetricCryptoServiceAnnotatedPackage {
 				.addCode("return asymmetricCryptoUtils.encrypt(payload, key);")
 				.build();
 
-		AnnotationSpec generated = AnnotationSpec.builder(Generated.class)
+		AnnotationSpec generated = AnnotationSpec.builder(javax.annotation.Generated.class)
 				.addMember("value", "$S", CryptoutilsAsymmetricCryptoServiceProcessor.class.getName())
 				.build();
 
 		TypeSpec asymmetricCryptoService = TypeSpec.classBuilder(serviceName)
 				.addAnnotation(generated)
 				.addModifiers(Modifier.PUBLIC)
-				.addSuperinterface(AsymmetricCryptoService.class)
+				.addSuperinterface(com.honeyedoak.cryptoutils.AsymmetricCryptoService.class)
 				.addField(asymmetricCryptoUtils)
-				.addAnnotation(Service.class)
+				.addAnnotation(org.springframework.stereotype.Service.class)
 				.addMethod(constructor)
 				.addMethod(generateKeyPair)
 				.addMethod(decodePrivateKey)
