@@ -1,5 +1,7 @@
 # ppksecuredws-crypto-util
 
+[![](https://jitpack.io/v/HoneyedOakSoftware/ppksecuredws-crypto-util.svg)](https://jitpack.io/#HoneyedOakSoftware/ppksecuredws-crypto-util)
+
 automatic generation of CryptoService classes to reduce boilerplate.
 
 ## provided annotations
